@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>上划头部固定布局</title>
+    <style>
+        /* 进行头部定位的实现，采用头部相对于浏览器绝对定位，下方使用相对定位 */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            text-align: center;
+            line-height: 200px;
+            font-size: 30px;
+            z-index: 10;
+        }
+
+        .box {
+            height: 10000px;
+            background-color: blueviolet;
+            position: relative;
+            top: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <header class="header">头部</header>
+        <div class="box"></div>
+    </div>
+</body>
+
+</html>
