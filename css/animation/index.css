@@ -1,0 +1,26 @@
+.gradient {
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    animation: gradient 5s infinite;
+    -webkit-animation: gradient 5s infinite; /*infinite:不限制次数,即无限次*/
+}
+
+@keyframes gradient {
+    from {
+        background-color: red;
+    }
+    to {
+        background-color: blue;
+    }
+}
+
+/*Safari 和 Chrome:*/
+@-webkit-keyframes gradient {
+    from {
+        background-color: red;
+    }
+    to {
+        background-color: blue;
+    }
+}
