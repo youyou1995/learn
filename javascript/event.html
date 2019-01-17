@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>scroll</title>
+    <style>
+        #app {
+            height: 10000px;
+            background-color: red;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div style="height: 100px;">111</div>
+    <div style="height: 100px;">222</div>
+    <div style="height: 100px;">333</div>
+    <div style="height: 100px;">444</div>
+    <div style="height: 100px;">555</div>
+</div>
+<script>
+    let app = document.getElementById('app');
+    window.addEventListener('scroll', function () {
+        console.log(new Date().getTime());
+    }, true)
+</script>
+</body>
+</html>

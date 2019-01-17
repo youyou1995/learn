@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>indexedDB数据库</title>
+</head>
+<body>
+<div id="app">
+    <input id="create" type="button" width="50px" height="50px" value="创建数据库">
+    <input id="add" type="button" value="新增">
+    <input id="put" type="button" value="修改">
+    <input id="get" type="button" value="获取">
+    <input id="delete" type="button" value="删除">
+    <input id="createTable" type="button" value="创建仓库">
+</div>
+<script>
+    window.onload = function () {
+        let createBtn = document.getElementById('create'),
+            addBtn = document.getElementById('add'),
+            putBtn = document.getElementById('put'),
+            getBtn = document.getElementById('get'),
+            deleteBtn = document.getElementById('delete'),
+            createTableBtn = document.getElementById('createTable');
+        let request, db, store;
+        createBtn.addEventListener('click', event => {
+            console.log('btn点击');
+            //创建indexedDB数据库
+            request = indexedDB.open('demo', 1);//'demo'数据库名称，1数据库版本，必须整数
+            request.addEventListener('success', e => {
+                console.log('demo连接成功');
+                //创建事务
+                db = e.target.result;
+                /**
+                 * transaction:创建事务
+                 * users:操作的对象仓库名称，事务模式
+                 */
+                // tx = db.transaction('users', 'readwrite');
+            });
+            request.addEventListener('error', e => {
+                console.log('数据库连接失败', e);
+            })
+            //创建仓库
+            request.addEventListener('upgradeneeded', e => {
+                db = e.target.result;
+                //     /**
+                //      * createObjectStore用于创建仓库
+                //      * user：仓库的名称和mysql数据表类似
+                //      * keyPath：主键
+                //      * autoIncrement：是否自增
+                //      * @type {IDBObjectStore}
+                //      */
+                store = db.createObjectStore('users', {keyPath: 'userId', autoIncrement: true});
+                store = db.createObjectStore('shops', {keyPath: 'id', autoIncrement: false});
+                console.log('创建对象仓库成功', e);
+            })
+        })
+        createTableBtn.addEventListener('click', ev => {
+            store = db.createObjectStore('users', {keyPath: 'userId', autoIncrement: false});
+            console.log('创建对象仓库成功', e);
+        })
+        //新增
+        addBtn.addEventListener('click', ev => {
+            const tx = db.transaction('users', 'readwrite');
+            const store = tx.objectStore('users');
+            const reqAdd = store.add({'userName': '李白', 'age': 24});
+            reqAdd.addEventListener('success', e => {
+                console.log('保存成功');
+            })
+        })
+        //修改或新增
+        putBtn.addEventListener('click', ev => {
+            const tx = db.transaction('users', 'readwrite');
+            const store = tx.objectStore('users');
+            const reqAdd = store.put({ 'userName': '丽华', 'age': 24});
+            reqAdd.addEventListener('success', e => {
+                console.log('保存成功');
+            })
+        })
+        //获取数据
+        getBtn.addEventListener('click', ev => {
+            const tx = db.transaction('users', 'readwrite');
+            const store = tx.objectStore('users');
+            const reqGet = store.get(1);
+
+            reqGet.addEventListener('success', e => {
+                console.log('获取数据成功', e, this);
+            })
+        })
+        //删除
+        deleteBtn.addEventListener('click', ev => {
+            const tx = db.transaction('users', 'readwrite');
+            const store = tx.objectStore('users');
+            const reqDelete = store.delete(1);
+            reqDelete.addEventListener('success', e => {
+                console.log('删除数据库成功!');
+            })
+        })
+    }
+</script>
+</body>
+</html>
