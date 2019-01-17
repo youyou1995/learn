@@ -12,6 +12,7 @@
     <input id="get" type="button" value="获取">
     <input id="delete" type="button" value="删除">
     <input id="createTable" type="button" value="创建仓库">
+    <input id="cursor" type="button" value="遍历数据">
 </div>
 <script>
     window.onload = function () {
@@ -20,7 +21,8 @@
             putBtn = document.getElementById('put'),
             getBtn = document.getElementById('get'),
             deleteBtn = document.getElementById('delete'),
-            createTableBtn = document.getElementById('createTable');
+            createTableBtn = document.getElementById('createTable'),
+            cursorBtn=document.getElementById('cursor');
         let request, db, store;
         createBtn.addEventListener('click', event => {
             console.log('btn点击');
@@ -94,6 +96,22 @@
             reqDelete.addEventListener('success', e => {
                 console.log('删除数据库成功!');
             })
+        })
+        cursorBtn.addEventListener('click',ev=>{
+            const cursor = db.transaction('users').objectStore('users').openCursor();
+            cursor.addEventListener('success',e=>{
+                let result = e.target.result;
+                if(result){
+                    console.log('cursor',result);
+                    cursor.continue();
+                }else{
+                    console.log('遍历完成');
+                }
+            })
+            cursor.addEventListener('error',e=>{
+                console.log('cursor error');
+            })
+
         })
     }
 </script>
