@@ -22,7 +22,7 @@
             getBtn = document.getElementById('get'),
             deleteBtn = document.getElementById('delete'),
             createTableBtn = document.getElementById('createTable'),
-            cursorBtn=document.getElementById('cursor');
+            cursorBtn = document.getElementById('cursor');
         let request, db, store;
         createBtn.addEventListener('click', event => {
             console.log('btn点击');
@@ -73,7 +73,7 @@
         putBtn.addEventListener('click', ev => {
             const tx = db.transaction('users', 'readwrite');
             const store = tx.objectStore('users');
-            const reqAdd = store.put({ 'userName': '丽华', 'age': 24});
+            const reqAdd = store.put({'userName': '丽华', 'age': 24});
             reqAdd.addEventListener('success', e => {
                 console.log('保存成功');
             })
@@ -97,18 +97,25 @@
                 console.log('删除数据库成功!');
             })
         })
-        cursorBtn.addEventListener('click',ev=>{
+        cursorBtn.addEventListener('click', ev => {
             const cursor = db.transaction('users').objectStore('users').openCursor();
-            cursor.addEventListener('success',e=>{
+            let results = [];
+            cursor.addEventListener('success', e => {
+                /**
+                 * result 类型
+                 * source{name:users(数据表名称),keyPath:'}
+                 * value {} 存储的数据
+                 */
                 let result = e.target.result;
-                if(result){
-                    console.log('cursor',result);
-                    cursor.continue();
-                }else{
-                    console.log('遍历完成');
+                if (result) {
+                    console.log('cursor', result, JSON.parse(JSON.stringify(result.value)));
+                    results.push(JSON.parse(JSON.stringify(result.value)));
+                    result.continue();
+                } else {
+                    console.log('遍历完成', results);
                 }
             })
-            cursor.addEventListener('error',e=>{
+            cursor.addEventListener('error', e => {
                 console.log('cursor error');
             })
 
