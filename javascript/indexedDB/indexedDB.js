@@ -5,19 +5,21 @@ export default {
      * @param name 数据库名称
      */
     connect(name, table) {
-        let request = indexedDB.open(name, 1);
-        request.addEventListener('success', e => {
-            return Promise.resolve('indexedDB 连接成功!');
-        })
-        request.addEventListener('error', e => {
-            return Promise.reject('indexedDB 连接失败!');
-        })
-        //创建仓库 第一次打开该数据库/数据库版本改变
-        request.addEventListener('upgradeneeded', e => {
-            db = e.target.result;
-            if (!db.objectStoreNames.contains('person')) {
-                let store = db.createObjectStore(table, {keyPath: 'keyword', autoIncrement: false});
-            }
+        return new Promise((resolve, reject) => {
+            let request = indexedDB.open(name, 1);
+            request.addEventListener('success', e => {
+                return resolve('indexedDB 连接成功!');
+            })
+            request.addEventListener('error', e => {
+                return reject('indexedDB 连接失败!');
+            })
+            //创建仓库 第一次打开该数据库/数据库版本改变
+            request.addEventListener('upgradeneeded', e => {
+                db = e.target.result;
+                if (!db.objectStoreNames.contains('person')) {
+                    let store = db.createObjectStore(table, {keyPath: 'keyword', autoIncrement: false});
+                }
+            })
         })
     },
     /**
@@ -26,15 +28,17 @@ export default {
      * @param {*} data 新增的数据
      */
     handleAdd(name, data) {
-        //可以进行链式调用
-        const tx = db.transaction(name, 'readwrite');
-        const store = tx.objectStore(name);
-        const add = store.add(data);
-        add.addEventListener('success', e => {
-            return Promise.resolve({s: 0});
-        })
-        add.addEventListener('error', e => {
-            return Promise.resolve({s: -1});
+        return new Promise((resolve, reject) => {
+            //可以进行链式调用
+            const tx = db.transaction(name, 'readwrite');
+            const store = tx.objectStore(name);
+            const add = store.add(data);
+            add.addEventListener('success', e => {
+                return resolve({s: 0});
+            })
+            add.addEventListener('error', e => {
+                return resolve({s: -1});
+            })
         })
     },
     /**
@@ -43,15 +47,17 @@ export default {
      * @param {*} data
      */
     handleUpdate(name, data) {
-        const tx = db.transaction(name, 'readwrite');
-        const store = tx.objectStore(name);
-        const put = store.put(data);
-        put.addEventListener('success', e => {
-            console.log('更新成功');
-            return Promise.resolve({s: 0});
-        })
-        put.addEventListener('error', e => {
-            return Promise.reject({s: -1});
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(name, 'readwrite');
+            const store = tx.objectStore(name);
+            const put = store.put(data);
+            put.addEventListener('success', e => {
+                console.log('更新成功');
+                return resolve({s: 0});
+            })
+            put.addEventListener('error', e => {
+                return reject({s: -1});
+            })
         })
     },
     /**
@@ -60,16 +66,18 @@ export default {
      * @param {*} key 主键
      */
     handleGet(name, key) {
-        const get = db.transaction(name, 'readwrite')
-            .objectStore(name)
-            .get(key);
-        get.addEventListener('success', e => {
-            if (get.result) {
-                return Promise.resolve({s: 0, data: result})
-            }
-        })
-        get.addEventListener('error', e => {
-            return Promise.reject({s: -1});
+        return new Promise((resolve, reject) => {
+            const get = db.transaction(name, 'readwrite')
+                .objectStore(name)
+                .get(key);
+            get.addEventListener('success', e => {
+                if (get.result) {
+                    return resolve({s: 0, data: result})
+                }
+            })
+            get.addEventListener('error', e => {
+                return reject({s: -1});
+            })
         })
     },
     /**
@@ -78,14 +86,16 @@ export default {
      * @param key 主键名称
      */
     handleDelete(name, key) {
-        const tx = db.transaction(name, 'readwrite');
-        const store = tx.objectStore(name);
-        const del = store.delete(key);
-        del.addEventListener('success', e => {
-            return Promise.resolve({s: 0});
-        })
-        del.addEventListener('error', e => {
-            return Promise.reject({s: -1})
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(name, 'readwrite');
+            const store = tx.objectStore(name);
+            const del = store.delete(key);
+            del.addEventListener('success', e => {
+                return Promise.resolve({s: 0});
+            })
+            del.addEventListener('error', e => {
+                return Promise.reject({s: -1})
+            })
         })
     },
     /**
@@ -93,12 +103,14 @@ export default {
      * @param name 数据仓库名称
      */
     handleDeleteDatabase(name) {
-        const request = window.indexedDB.deleteDatabase(name);
-        request.addEventListener('success', e => {
-            return Promise.resolve({s: 0});
-        })
-        request.addEventListener('error', e => {
-            return Promise.reject({s: -1});
+        return new Promise((resolve, reject) => {
+            const request = window.indexedDB.deleteDatabase(name);
+            request.addEventListener('success', e => {
+                return resolve({s: 0});
+            })
+            request.addEventListener('error', e => {
+                return reject({s: -1});
+            })
         })
     },
     /**
@@ -109,34 +121,38 @@ export default {
      * @return <error>
      */
     handleGetBothData(name) {
-        const getBoth = db.transaction(name).objectStore(name).openCursor();
-        let results = [];
-        getBoth.addEventListener('success', e => {
-            let cursor = e.target.result;
-            if (cursor) {
-                results.push(cursor.value);
-                result.continue();
-            } else {
-                return Promise.resolve({s: -1, data: results});
-            }
-        })
-        getBoth.addEventListener('error', e => {
-            return Promise.reject({s: -1});
+        return new Promise((resolve, reject) => {
+            const getBoth = db.transaction(name).objectStore(name).openCursor();
+            let results = [];
+            getBoth.addEventListener('success', e => {
+                let cursor = e.target.result;
+                if (cursor) {
+                    results.push(cursor.value);
+                    result.continue();
+                } else {
+                    return Promise.resolve({s: -1, data: results});
+                }
+            })
+            getBoth.addEventListener('error', e => {
+                return Promise.reject({s: -1});
+            })
         })
     },
     handleDeleteBothData(name) {
-        const deleteBoth = db.transaction(name).objectStore(name).openCursor();
-        deleteBoth.addEventListener('success', e => {
-            let cursor = e.target.result;
-            if (cursor) {
-                cursor.delete();
-                cursor.continue();
-            } else {
-                return Promise.resolv({s: 0});
-            }
-        })
-        deleteBoth.addEventListener('error', e => {
-            return Promise.reject({s: -1})
+        return new Promise((resolve, reject) => {
+            const deleteBoth = db.transaction(name).objectStore(name).openCursor();
+            deleteBoth.addEventListener('success', e => {
+                let cursor = e.target.result;
+                if (cursor) {
+                    cursor.delete();
+                    cursor.continue();
+                } else {
+                    return Promise.resolv({s: 0});
+                }
+            })
+            deleteBoth.addEventListener('error', e => {
+                return Promise.reject({s: -1})
+            })
         })
     }
 }
