@@ -8,10 +8,10 @@ export default {
         return new Promise((resolve, reject) => {
             let request = indexedDB.open(name, 1);
             request.addEventListener('success', e => {
-                return resolve('indexedDB 连接成功!');
+                resolve('indexedDB 连接成功!');
             })
             request.addEventListener('error', e => {
-                return reject('indexedDB 连接失败!');
+                reject('indexedDB 连接失败!');
             })
             //创建仓库 第一次打开该数据库/数据库版本改变
             request.addEventListener('upgradeneeded', e => {
@@ -34,10 +34,10 @@ export default {
             const store = tx.objectStore(name);
             const add = store.add(data);
             add.addEventListener('success', e => {
-                return resolve({s: 0});
+                resolve({s: 0});
             })
             add.addEventListener('error', e => {
-                return resolve({s: -1});
+                resolve({s: -1});
             })
         })
     },
@@ -53,10 +53,10 @@ export default {
             const put = store.put(data);
             put.addEventListener('success', e => {
                 console.log('更新成功');
-                return resolve({s: 0});
+                resolve({s: 0});
             })
             put.addEventListener('error', e => {
-                return reject({s: -1});
+                reject({s: -1});
             })
         })
     },
@@ -72,11 +72,11 @@ export default {
                 .get(key);
             get.addEventListener('success', e => {
                 if (get.result) {
-                    return resolve({s: 0, data: result})
+                    resolve({s: 0, data: result})
                 }
             })
             get.addEventListener('error', e => {
-                return reject({s: -1});
+                reject({s: -1});
             })
         })
     },
@@ -91,10 +91,10 @@ export default {
             const store = tx.objectStore(name);
             const del = store.delete(key);
             del.addEventListener('success', e => {
-                return Promise.resolve({s: 0});
+                Promise.resolve({s: 0});
             })
             del.addEventListener('error', e => {
-                return Promise.reject({s: -1})
+                Promise.reject({s: -1})
             })
         })
     },
@@ -106,10 +106,10 @@ export default {
         return new Promise((resolve, reject) => {
             const request = window.indexedDB.deleteDatabase(name);
             request.addEventListener('success', e => {
-                return resolve({s: 0});
+                resolve({s: 0});
             })
             request.addEventListener('error', e => {
-                return reject({s: -1});
+                reject({s: -1});
             })
         })
     },
@@ -130,11 +130,11 @@ export default {
                     results.push(cursor.value);
                     result.continue();
                 } else {
-                    return Promise.resolve({s: -1, data: results});
+                    resolve({s: -1, data: results});
                 }
             })
             getBoth.addEventListener('error', e => {
-                return Promise.reject({s: -1});
+                reject({s: -1});
             })
         })
     },
@@ -147,11 +147,11 @@ export default {
                     cursor.delete();
                     cursor.continue();
                 } else {
-                    return Promise.resolv({s: 0});
+                    resolv({s: 0});
                 }
             })
             deleteBoth.addEventListener('error', e => {
-                return Promise.reject({s: -1})
+                reject({s: -1})
             })
         })
     }
