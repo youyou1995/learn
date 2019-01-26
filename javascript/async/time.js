@@ -8,6 +8,7 @@ async function timeOut() {
     })
 }
 
+//赋值操作async，使用try-catch进行错误处理
 async function time() {
     try {
         let result = await timeOut();
@@ -18,3 +19,14 @@ async function time() {
 }
 
 time();
+
+//async，使用promise的catch进行错误处理
+const errCatch = async () => {
+    await timeOut().then(doc => {
+        console.log('doc', doc);
+    }).catch(err => {
+        console.error('err', err);
+    })
+}
+
+errCatch();
