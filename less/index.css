@@ -1,0 +1,66 @@
+#header {
+  color: #6c94be;
+}
+.banner {
+  font-weight: 200;
+  line-height: 10px;
+  margin: 20px;
+}
+.mixins-color {
+  border: 1px solid red;
+  padding: 20px;
+}
+.mixins .box {
+  margin: 20px;
+  border: 1px solid red;
+  padding: 20px;
+}
+.mixins .title {
+  font-size: 20px;
+  border: 1px solid red;
+  padding: 20px;
+}
+.box {
+  font-size: 20px;
+}
+.box .app {
+  padding: 10px;
+}
+.clearfix {
+  display: block;
+  zoom: 1;
+}
+.clearfix:after {
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+@media screen {
+  .screen-color {
+    color: green;
+  }
+}
+@media screen and (min-width: 768px) {
+  .screen-color {
+    color: red;
+  }
+}
+@media tv {
+  .screen-color {
+    color: black;
+  }
+}
+#a {
+  color: blue;
+}
+@font-face {
+}
+.class {
+  width: 50%;
+  color: #f6430f;
+  background-color: #f8b38d;
+}
+/*# sourceMappingURL=index.css.map */

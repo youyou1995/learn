@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+</head>
+<body>
+<input type="file" onchange="importf(this)"/>
+<div id="demo"></div>
+<script>
+    var rABS = false; //是否将文件读取为二进制字符串
+    function importf(obj) {//导入
+        console.log('dob', obj);
+        if (!obj.files) {
+            return;
+        }
+        var f = obj.files[0];
+        {
+            var reader = new FileReader();
+            var name = f.name;
+            reader.onload = function (e) {
+                var data = e.target.result;
+                var wb;
+                if (rABS) {
+                    wb = XLSX.read(data, {type: 'binary'});
+                } else {
+                    var arr = fixdata(data);
+                    wb = XLSX.read(btoa(arr), {type: 'base64'});
+                }
+                let result = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                document.getElementById("demo").innerHTML = JSON.stringify(result);
+            };
+            if (rABS) reader.readAsBinaryString(f);
+            else reader.readAsArrayBuffer(f);
+        }
+    }
+
+    function fixdata(data) {
+        var o = "", l = 0, w = 10240;
+        for (; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+        o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+        return o;
+    }
+</script>
+</body>
+</html>

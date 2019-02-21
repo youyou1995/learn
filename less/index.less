@@ -1,5 +1,92 @@
-var less = require('less');
+//变量的使用(可以进行复制和加/减/乘/除运算)包括(number、color、variable)
+@nice-blue: #5B83AD;
+@light-blue: @nice-blue + #111; //#6c94be
+@conversion: 5cm + 10cm; //15cm
 
-less.render('.class { width:(1+1)}',function(e,css)){
-console.log(css);
+#header {
+  color: @light-blue;
 }
+
+//class名称作为变量
+@my-select: banner;
+.@{my-select} {
+  font-weight: 200;
+  line-height: 10px;
+  margin: 20px;
+}
+
+//mixins混合模式可以混合模板
+.mixins-color {
+  border: 1px solid red;
+  padding: 20px;
+}
+
+.mixins {
+  .box {
+    margin: 20px;
+    .mixins-color;
+  }
+
+  .title {
+    font-size: 20px;
+    .mixins-color;
+  }
+}
+
+//层级嵌套
+.box {
+  font-size: 20px;
+
+  .app {
+    padding: 10px;
+  }
+}
+
+//&的使用
+.clearfix {
+  display: block;
+  zoom: 1;
+
+  &:after { //&代表父元素，即clearfix
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+//指令嵌套和冒泡
+.screen-color {
+  @media screen {
+    color: green;
+    @media (min-width: 768px) {
+      color: red;
+    }
+  }
+  @media tv {
+    color: black;
+  }
+}
+
+#a {
+  color: blue;
+  @font-face {
+    //src: made-up-url;
+  }
+  //padding: 2 2 2 2;
+}
+
+//function
+@base: #f04615;
+@width: 0.5;
+
+.class {
+  width: percentage(@width);
+  color: saturate(@base, 5%);
+  background-color: spin(lighten(@base, 25%), 8);
+}
+
+//引用
+@import 'styles';
