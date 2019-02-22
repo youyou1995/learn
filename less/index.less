@@ -15,6 +15,27 @@
   margin: 20px;
 }
 
+//url使用-变量拼接
+@image: '../img/';
+
+.box {
+  background: url('@{image}ttt.png');
+}
+
+//当变量定义多个时，只会使用最后定义的属性值
+@var: 0;
+.calss {
+  @var: 1;
+
+  .bress {
+    @var: 2;
+    three: @var;
+    @var: 3;
+  }
+
+  one: @var;
+}
+
 //mixins混合模式可以混合模板
 .mixins-color {
   border: 1px solid red;
@@ -24,13 +45,22 @@
 .mixins {
   .box {
     margin: 20px;
-    .mixins-color;
+    .mixins-color; //或者.mixins-color()
   }
 
   .title {
     font-size: 20px;
     .mixins-color;
   }
+}
+
+//mixins混合想创建混合集可以添加括号()
+.mixins-colors() {
+  background-color: #009efb;
+}
+
+.box-title {
+  .mixins-colors;
 }
 
 //层级嵌套
@@ -87,6 +117,29 @@
   color: saturate(@base, 5%);
   background-color: spin(lighten(@base, 25%), 8);
 }
-
+//变量计算
+.average(@x,@y){
+  @average:(@x+@y);
+}
+div{
+  .average(15px,20px);
+  padding: @average;
+}
 //引用
 @import 'styles';
+
+//extend 扩展
+//:extend选择器会继承上面的样式
+nav ul {
+  &:extend(.inline);
+  background-color: #009efb;
+}
+
+.inline {
+  color: red;
+}
+
+//.inline,
+//nav ul {
+//  color: red;
+//}

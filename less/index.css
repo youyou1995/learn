@@ -6,6 +6,15 @@
   line-height: 10px;
   margin: 20px;
 }
+.box {
+  background: url('../img/ttt.png');
+}
+.calss {
+  one: 1;
+}
+.calss .bress {
+  three: 3;
+}
 .mixins-color {
   border: 1px solid red;
   padding: 20px;
@@ -19,6 +28,9 @@
   font-size: 20px;
   border: 1px solid red;
   padding: 20px;
+}
+.box-title {
+  background-color: #009efb;
 }
 .box {
   font-size: 20px;
@@ -62,5 +74,15 @@
   width: 50%;
   color: #f6430f;
   background-color: #f8b38d;
+}
+div {
+  padding: 35px;
+}
+nav ul {
+  background-color: #009efb;
+}
+.inline,
+nav ul {
+  color: red;
 }
 /*# sourceMappingURL=index.css.map */
