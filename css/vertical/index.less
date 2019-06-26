@@ -1,0 +1,19 @@
+//垂直居中，在父类中定义，子类垂直居中
+.vertical-center {
+  // 或者table/table-cell也可以
+  display: table;
+  vertical-align: middle;
+}
+
+.app {
+  & > div {
+    width: 100px;
+    height: 100px;
+    background-color: #009efb;
+    .vertical-center;
+
+    & > h1 {
+      text-align: center;
+    }
+  }
+}

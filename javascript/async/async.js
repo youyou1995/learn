@@ -44,11 +44,33 @@ function testPromise(data) {
 }
 
 async function testAsync() {
-     await testPromise({s: 1});
+    await testPromise({s: 1});
 }
 
 testAsync().then(doc => {
     console.log('testAsync-doc', doc, this);
 }).catch(err => {
     console.log('testAsync-err', err);
-})
+});
+
+//在switch中是否可用await
+function switchAwait() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve('111');
+        }, 5000)
+    })
+}
+
+async function st(type) {
+    let lt;
+    switch (type) {
+        case '01':
+            lt = await switchAwait();
+            break;
+    }
+    console.log('lt', lt);
+}
+
+st('01');
+
