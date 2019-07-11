@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "commonjs", //遵循的JavaScript模块规范。主要的候选项有：commonjs、AMD和es2015。为了后面与node.js保持一致，我们这里选用commonjs。
+    "target": "es5", //编译之后生成的JavaScript文件需要遵循的标准。有三个候选项：es3、es5、es2015 (即es6)
+    "sourceMap": true //编译时是否生成对应的source map文件。这个文件主要用于前端调试。当前端js文件被压缩引用后，出错时可借助同名的source map文件查找源文件中错误位置。
+  },
+  "exclude": [ // ts编译时提出的目录
+    "node_modules"
+  ]
+}

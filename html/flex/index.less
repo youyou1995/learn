@@ -1,0 +1,61 @@
+div {
+  padding: 10px;
+  width: 800px;
+  margin: auto;
+}
+
+ul li {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  list-style: none;
+  line-height: 100px;
+  text-align: center;
+  background-color: aqua;
+}
+
+ul {
+  /*flex-direction: row;*/
+}
+
+/*父类*/
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  /*水平方向，起点在左端*/
+  flex-wrap: nowrap; // 不换行，随之进行宽度调整。
+
+  flex-wrap: wrap; // 换行，第一行在上方
+
+  flex-wrap: wrap-reverse; // 换行，第一行在下方
+}
+
+.flex-row-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+  /* 水平方向，七点在右端*/
+  // 建立在主轴为水平方向的对齐方式
+  justify-content: flex-start;
+
+  justify-content: flex-end;
+
+
+  justify-content: center;
+
+
+  justify-content: space-between; // 两端对齐
+
+  justify-content: space-around; // 两侧的间隔相等，所以之间的间隔比项目和边缘的间隔大一倍
+}
+
+/*垂直方向，上为起点*/
+.flex-row-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/*垂直方向，下为起点*/
+.flex-row-column-reverse {
+  display: flex;
+  flex-direction: column-reverse;
+}
