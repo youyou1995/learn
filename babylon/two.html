@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/babylon.max.js"></script>
+    <style>
+        html, body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="renderCanvas"></canvas>
+
+<script>
+    // 一个场景和两个形状， 一个球体和一个地平面
+    /**
+     * Vector3
+     * 网格,光源活着相机对象的位置(.position)属性的值
+     * 网格对象的旋转(.rotation)属性的值
+     * 网格对象的缩放(.scaling)属性的值
+     * 光源对象的方向(.direction)属性的值
+     */
+    window.addEventListener('DOMContentLoaded', function () {
+        let canvas = document.getElementById('renderCanvas');
+        // 加载3D引擎
+        let engine = new BABYLON.Engine(canvas, true);
+
+        let createScene = function () {
+            // 创建场景对象
+            let scene = new BABYLON.Scene(engine);
+            // 场景一个相机
+            let camera = new BABYLON.FreeCamera('camera', new BABYLON.Vector3(0, 5, -10), scene);
+            // 将相机对准场景原点
+            camera.setTarget(BABYLON.Vector3.Zero());
+            // 将相机固定到画布上
+            camera.attachControl(canvas, false);
+            // 创建灯光，朝向天空
+            let light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
+            // let light2 = new BABYLON.HemisphericLight('light2', new BABYLON.Vector3(3, 1, 0), scene);
+            // 创建一个球体形状
+            let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments: 16, diameter: 2}, scene);
+            // 将球向上移动1/2
+            sphere.position.y = 1;
+            // 创建一个内置的地面形状
+            let ground = BABYLON.MeshBuilder.CreateGround('ground1', {height: 6, width: 6, subdivisions: 2}, scene);
+            // 返回创建的场景
+            return scene;
+        };
+        // 创建场景
+        let scene = createScene();
+        // 重复渲染画布
+        engine.runRenderLoop(function () {
+            scene.render();
+        });
+        // resize
+        window.addEventListener('resize', () => {
+            engine.resize();
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/babylon.max.js"></script>
+    <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+    <style>
+        html, body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="renderCanvas"></canvas>
+
+<script>
+    // 一个场景和两个形状， 一个球体和一个地平面
+    window.addEventListener('DOMContentLoaded', function () {
+        let canvas = document.getElementById('renderCanvas');
+        // 加载3D引擎
+        let engine = new BABYLON.Engine(canvas, true);
+
+        let createScene = function () {
+            // 创建场景对象
+            let scene = new BABYLON.Scene(engine);
+            // 场景一个相机
+            let camera = new BABYLON.ArcRotateCamera('camera', Math.PI / 2, Math.PI / 2, 10, new BABYLON.Vector3(0, 0,0), scene);
+            // 将相机固定到画布上
+            camera.attachControl(canvas, true);
+            camera.setPosition(new BABYLON.Vector3(0, 15, -30));
+            // 添加灯光
+            let light1 = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(1, 1, 0), scene);
+            let light2 = new BABYLON.PointLight('light2', new BABYLON.Vector3(0, 1, -1), scene);
+            // 创建操作网格
+            let sphere = BABYLON.MeshBuilder.CreateSphere('sphere', {segments: 16, diameter: 2}, scene);
+            // 将球向上移动1/2
+            sphere.position.y = 1;
+            // 创建一个内置的地面形状
+            let ground = BABYLON.MeshBuilder.CreateGround('ground1', {height: 6, width: 6, subdivisions: 2}, scene);
+            return scene;
+        };
+        // 创建场景
+        let scene = createScene();
+        // 重复渲染画布
+        engine.runRenderLoop(function () {
+            scene.render();
+        });
+        // resize
+        window.addEventListener('resize', () => {
+            engine.resize();
+        });
+    });
+</script>
+</body>
+</html>

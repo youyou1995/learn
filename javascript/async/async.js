@@ -74,3 +74,22 @@ async function st(type) {
 
 st('01');
 
+// forEach不可以和async await合用
+let arr = [1, 2, 3, 4, 5, 6];
+
+function num() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve();
+        }, 2000);
+    })
+}
+
+async function numTest() {
+    for (let i = 0; i < arr.length; i++) {
+        let con = await num();
+        console.log('con-', i);
+    }
+}
+
+numTest();

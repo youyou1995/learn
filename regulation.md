@@ -47,3 +47,4 @@ const obj = {a:1,b:2};
 let a = 'txt';
 let a = `he is ${a} type`;
 ```
+- 对于函数多使用`多行注释`进行注释函数方法。

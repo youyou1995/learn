@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>长按鼠标连续触发和长按一定时间后触发</title>
+</head>
+<body>
+<div id="app">
+    <div class="series">
+        <h1></h1>
+        <div class="button">
+            <button>加</button>
+            <button>减</button>
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        let series = document.getElementsByClassName('series');
+        let seriesAdd = document.getElementsByClassName('series > button');
+        console.log('series', series, seriesAdd);
+    }
+</script>
+</body>
+</html>
