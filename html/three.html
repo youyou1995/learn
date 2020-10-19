@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>three.js</title>
+    <style>
+        body{background-color: #000000;margin: 0px;overflow: hidden;}
+        a{color:#0078ff;}
+    </style>
+</head>
+<body>
+<div id="canvas" style="text-align:center;margin:1px 0; font:normal 14px/24px 'MicroSoft YaHei';color:#ffffff">
+    <p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
+    <p>修改：<a href="#" target="_blank">elick</a></p>
+</div>
+<script src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script>
+<script>
+    var SEPARATION = 100, AMOUNTX = 50, AMOUNTY = 50;
+    var container;
+    var camera, scene, renderer;
+    var particles, particle, count = 0;
+    var mouseX = 0, mouseY = 0;
+    var windowHalfX = window.innerWidth / 2;
+    var windowHalfY = window.innerHeight / 2;
+    init();
+    animate();
+
+    function init() {
+        container = document.getElementById('canvas');
+        // document.body.appendChild(container); //添加显示区域
+        //创建摄像机
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+        camera.position.z = 1000;
+        //创建场景
+        scene = new THREE.Scene();
+        //创建小白点
+        particles = new Array();
+        //var PI2 = Math.PI * 2;
+        // var material = new THREE.ParticleCanvasMaterial( {
+        //     color: 0xffffff,
+        //     program: function ( context ) {
+        //         context.beginPath();
+        //         context.arc( 0, 0, 1, 0, PI2, true );
+        //         context.fill();
+        //     }
+        // } );
+        //创建球体
+        var geometry = new THREE.SphereBufferGeometry(1, 16, 12);
+        var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+        var i = 0;
+        for (var ix = 0; ix < AMOUNTX; ix++) {
+            for (var iy = 0; iy < AMOUNTY; iy++) {
+                //创建球体实例 并且摆放位置
+                particle = particles[i++] = new THREE.Mesh(geometry, material);
+                particle.position.x = ix * SEPARATION - ((AMOUNTX * SEPARATION) / 2);
+                particle.position.z = iy * SEPARATION - ((AMOUNTY * SEPARATION) / 2);
+                scene.add(particle);
+            }
+        }
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+        document.addEventListener('mousemove', onDocumentMouseMove, false);
+        document.addEventListener('touchstart', onDocumentTouchStart, false);	//这个和下面那个 好像针对的触摸屏有关
+        document.addEventListener('touchmove', onDocumentTouchMove, false);
+        //
+        window.addEventListener('resize', onWindowResize, false);
+    }
+
+    function onWindowResize() {
+        windowHalfX = window.innerWidth / 2;
+        windowHalfY = window.innerHeight / 2;
+        camera.aspect = window.innerWidth / window.innerHeight;	//宽高比例
+        //更新相机投影矩阵，必须在参数发生变化后调用。
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    //
+    function onDocumentMouseMove(event) {
+        //跟随转动的一般写法
+        mouseX = event.clientX - windowHalfX;
+        mouseY = event.clientY - windowHalfY;
+    }
+
+    function onDocumentTouchStart(event) {
+        if (event.touches.length === 1) {
+            event.preventDefault();
+            mouseX = event.touches[0].pageX - windowHalfX;
+            mouseY = event.touches[0].pageY - windowHalfY;
+            //console.log(mouseX+'----'+mouseY );
+        }
+    }
+
+    function onDocumentTouchMove(event) {
+        if (event.touches.length === 1) {
+            event.preventDefault();
+            mouseX = event.touches[0].pageX - windowHalfX;
+            mouseY = event.touches[0].pageY - windowHalfY;
+        }
+    }
+
+    //动画效果
+    function animate() {
+        requestAnimationFrame(animate);
+        render();
+    }
+
+    function render() {
+        //摄像机根据鼠标移动
+        camera.position.x += (mouseX - camera.position.x) * .05;
+        camera.position.y += (-mouseY - camera.position.y) * .05;
+        camera.lookAt(scene.position);	//固定坐标系 否则是不固定镜头的
+        //这里就是小球波动的算法了
+        var i = 0;
+        for (var ix = 0; ix < AMOUNTX; ix++) {
+            for (var iy = 0; iy < AMOUNTY; iy++) {
+                particle = particles[i++];
+                //总是搞混这里的Math.sin()是js自带的 不是three.js里的 那里的只是补充
+                particle.position.y = (Math.sin((ix + count) * 0.3) * 50) + (Math.sin((iy + count) * 0.5) * 50);
+                //放大缩小 这样才有海浪那个远近感
+                particle.scale.x = particle.scale.y = (Math.sin((ix + count) * 0.3) + 1) * 2 + (Math.sin((iy + count) * 0.5) + 1) * 2;
+            }
+        }
+        renderer.render(scene, camera);
+        count += 0.1;	//这个用于乱序值
+    }
+
+</script>
+</body>
+</html>

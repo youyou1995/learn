@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>textarea 文本框自动适应高度</title>
+    <style>
+        .app {
+
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <textarea name="tishi" id="textarea" cols="30" rows="10"></textarea>
+</div>
+<script>
+    let textareaId = document.getElementById('textarea');
+    textareaId.addEventListener('input', e => {
+        console.log('e', e, e.target.scrollHeight, textareaId.scrollHeight);
+        textareaId.style.height = `${e.target.scrollHeight}px`;
+        textareaId.style.maxHeight = `${textareaId.scrollHeight + 10}px`
+    })
+</script>
+</body>
+</html>
