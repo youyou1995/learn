@@ -86,7 +86,7 @@ li {
         box-shadow: inset 0px 0.3333333333rem 0.3333333333rem rgba(255, 255, 255, 0.5); }
         .wechat-index .content-info .tab .tab-item:first-child {
           border-top-left-radius: 0.8333333333rem; }
-        .wechat-index .content-info .tab .tab-item:last-child {
+        .wechat-index .content-info .tab .tab-item:nth-child(3) {
           border-top-right-radius: 0.8333333333rem; }
         .wechat-index .content-info .tab .tab-item .tab-item-title {
           font-size: 1.1666666667rem;

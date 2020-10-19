@@ -127,7 +127,7 @@ li {
           border-top-left-radius: px-rem(10);
         }
 
-        &:last-child {
+        &:nth-child(3) {
           border-top-right-radius: px-rem(10);
         }
 
