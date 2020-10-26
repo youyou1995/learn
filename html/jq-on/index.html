@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试jq的on</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+<div class="root">
+    <div class="list-box">
+        <ul>
+
+        </ul>
+    </div>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.js"></script>
+<script>
+    $(function() {
+        $('.list-box ul').on('click','.item', function() {
+            console.log('list')
+        })
+        $('.list-box ul').append('<li>' +
+            '<div class="item">12145454</div>' +
+            '</li>')
+    })
+</script>
+</body>
+</html>

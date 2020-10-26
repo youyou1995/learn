@@ -82,6 +82,9 @@
                         <div class="circle middle right"></div>
                         <div class="circle small right"></div>
                     </div>
+                    <div class="next">
+                        完成当前阶段自动开启下一阶段
+                    </div>
                     <!--优惠部分-->
                     <div class="discount">
                         <ul>
@@ -171,9 +174,7 @@
                             <img src="./image/present.svg" alt="">
                         </div>
                     </div>
-                    <div class="next">
-                        完成当前阶段自动开启下一阶段
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -224,8 +225,78 @@
         </div>
     </div>
 </div>
+
+<!--弹窗-->
+<div class="award-record-box">
+    <div class="award-record">
+        <div class="content">
+            <div class="title-box">
+                <div class="line-left"></div>
+                <div class="title">奖励激励</div>
+                <div class="line-right"></div>
+            </div>
+            <div class="record-content">
+                <ul>
+                    <li>
+                        <div class="left">
+                            <div class="number">
+                                100元优惠券
+                            </div>
+                            <div class="time">
+                                2020-12-12 24:00:00
+                            </div>
+                        </div>
+                        <div class="right success">
+                            领取成功
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left">
+                            <div class="number">
+                                100元优惠券
+                            </div>
+                            <div class="time">
+                                2020-12-12 24:00:00
+                            </div>
+                        </div>
+                        <div class="right fail">
+                            领取失败
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer">
+            关闭
+        </div>
+    </div>
+</div>
+<div class="get-success-modal">
+    <div class="get-success">
+        <div class="content">
+            <div class="title-box">
+                <div class="line-left"></div>
+                <div class="title">领取成功</div>
+                <div class="line-right"></div>
+            </div>
+            <div class="name">
+                请前往商城进行查看
+            </div>
+        </div>
+        <div class="footer">
+            <div class="left">
+                取消
+            </div>
+            <div class="next">
+                立即前往
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.form/4.3.0/jquery.form.min"></script>
+<script src="js/index.js"></script>
 <script type="text/javascript">
-    // document.documentElement.style.fontSize = document.documentElement.clientWidth / 640*100 + 'px';
+    document.documentElement.style.fontSize = document.documentElement.clientWidth / 375*12 + 'px';
 </script>
 </body>
 </html>

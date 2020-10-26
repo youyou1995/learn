@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="easyEditor.js"></script>
+    <style>
+        #editor {
+            border: 1px solid red;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="editor" style="width:500px;height:300px;"></div>
+    <button id="add">123456</button>
+    <button id="addHtml">html添加</button>
+    <script>
+        var editor = easyEditor('editor');
+        var add = document.getElementById('add');
+        add.click = function() {
+            editor.insertBlock({
+                text: '123456',
+                color: '#f00',
+                data: {
+                    id: 123
+                }
+            })
+        }
+        var addHtml = document.getElementById('addHtml');
+        addHtml.click = function () {
+            editor.insertHTML('<span style="color:red">123456</span>')
+        }
+    </script>
+</body>
+</html>
