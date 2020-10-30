@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let str1 = '\n' +
+        '                        <p><span class="tab-label" contenteditable="false">奖品名称</span> 领取方法</p>\n' +
+        '                        <p>邀请<span class="tab-label" contenteditable="false">3</span>位好友为你助力，即可领取奖品。</p>\n' +
+        '                        <p>把你的专属海报分享出去吧，邀请大家来为你助力</p>\n' +
+        '                        <p>为您生成专属海报 ↓↓↓</p>\n' +
+        '                    \n'
+        // 'entryt_text: \n' +
+        // '                    <p>@ <span class="tab-label" contenteditable="false">受邀请人昵称</span>您正在为好友助力</p>\n' +
+        // '                    <p>添加下方企业微信，即可助力成功。</p>\n' +
+        // '                    <p>添加下方企业微信，即可助力成功。</p>\n' +
+        // '                    <p>添加下方企业微信，即可助力成功。</p>\n' +
+        // '                    <p><span class="tab-label" contenteditable="false">奖品名称</span>先到先得</p>\n' +
+        // '                    <p>长按二维码添加好友即可完成助力↓↓↓↓↓↓↓↓</p>\n' +
+        // '                \n' +
+        // 'self_text: \n' +
+        // '                       <p>你的好友<span class="tab-label" contenteditable="false">受邀人昵称</span>前来为你助力啦！</p>\n' +
+        // '                       <p>当前完成助力人数：<span class="tab-label" contenteditable="false">当前完成助力人数</span></p>\n' +
+        // '                       <p>距离完成还差:<span class="tab-label" contenteditable="false">距离下阶段奖励需要人数</span></p>\n' +
+        // '                       <p>本活动共有<span class="tab-label" contenteditable="false">3</span>个阶提奖励，每完成一个阶梯会有不同的奖品哦！快去让好友来帮你助力吧</p>\n' +
+        // '                   \n' +
+        // 'exists_text: <p>亲，<span class="tab-label" contenteditable="false">受邀人昵称</span>，您已经关注我们啦!,不能为<span class="tab-label" contenteditable="false">邀请人昵称</span> 进行助力啦！</p>\n' +
+        // '                \n' +
+        // 'end_text: \n' +
+        // '                    <p>亲亲，本次活动已经结束啦!~</p>';
+    // let str2 = str1.replace(/[\s]+/g, ''); // 去除全部空格
+    // let str2 = str1.replace(/(^\s*)|(\s*$)/g, '');
+    let str2 = str1.replace(/\s+\/b(<w+\/>)/g, '');
+    console.log('str2', str2);
+    let str3 = str2.replace(/<p>(.*?)<\/p>/g, '$1/n'); // 替换p标签
+    console.log('str3', str3)
+    let str4 = str3.replace(/<spanclass="tab-label"contenteditable="false">(.*?)<\/span>/g, '[$1]');
+    console.log('str4', str4)
+    let str5 = str1.replace(/<\/?[^>]*>/g, '');
+    console.log('str5', str5)
+    let str6 = str1.replace(/^<w+\/>/g, "$1");
+    console.log('str6', str6)
+</script>
+</body>
+</html>

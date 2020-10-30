@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="easyEditor.js"></script>
     <style>
         #editor {
@@ -16,21 +17,40 @@
     <button id="add">123456</button>
     <button id="addHtml">html添加</button>
     <script>
-        var editor = easyEditor('editor');
-        var add = document.getElementById('add');
-        add.click = function() {
-            editor.insertBlock({
-                text: '123456',
-                color: '#f00',
-                data: {
-                    id: 123
-                }
+        $(document).ready(function(){
+            var editor = easyEditor('editor');
+            $('#add').on('click', function() {
+                console.log('$', $(this))
+                editor.insertBlock({
+                    text: '123456',
+                    color: '#f00',
+                    data: {
+                        id: 456
+                    }
+                })
             })
-        }
-        var addHtml = document.getElementById('addHtml');
-        addHtml.click = function () {
-            editor.insertHTML('<span style="color:red">123456</span>')
-        }
+            $('#addHtml').on('click', function () {
+                editor.insertHTML('<span class="tab-label" contenteditable="false">123456</span>')
+            })
+            $('#editor').on('click', 'span[content=false]',  function () {
+                console.log('span')
+            })
+            var add = document.getElementById('add');
+            add.click = function() {
+                console.log('123456')
+                editor.insertBlock({
+                    text: '123456',
+                    color: '#f00',
+                    data: {
+                        id: 123
+                    }
+                })
+            }
+            var addHtml = document.getElementById('addHtml');
+            addHtml.click = function () {
+                editor.insertHTML('<span style="color:red">123456</span>')
+            }
+        })
     </script>
 </body>
 </html>

@@ -321,7 +321,8 @@
         addEvent(_this.editbox, 'mousedown.edit', function () {
             _this.editbox.mousedown = true;
         });
-        addEvent(_this.editbox, 'mouseup.edit', function () {
+        addEvent(_this.editbox, 'mouseup.edit', function (e) {
+            console.log('edit-box', _this.editbox.mousedown, e.editbox)
             if(isFirefox && _this.editbox.mousedown){
                 _this.saveRange();
             }
@@ -334,7 +335,7 @@
                 _this.editbox.isCanSave = false;
             }
         });
-        addEvent(document, 'mouseup.edit', function () {
+        addEvent(document, 'mouseup.edit', function (e) {
             if (_this.editbox.isCanSave) {
                 _this.saveRange();
             }
@@ -404,6 +405,7 @@
         this.fontColor = editboxStyle['color'];
         //聚焦
         this.focus = function () {
+            console.log('focus')
             this.editbox.focus();
             this.saveRange();
             return this;
@@ -415,6 +417,7 @@
         };
         //光标定位
         this.setPosition = function (position) {
+            console.log('position', position)
             if(this.range == null){
                 this.focus();
             }else if (position == 'start' || position == 'end') {
@@ -633,18 +636,22 @@
         },
         //插入HTML
         insertHTML: function (html) {
+            console.log('focus', this.range, this.range)
             if (this.range === null) {
                 this.focus();
             }
             var range = this.range;
+            console.log('range', this.range, range.commonAncestorContainer.isContentEditable, range.startContainer)
             var oFragment = range.createContextualFragment(html);
             var oLastNode = oFragment.lastChild;
             range.deleteContents();
             range.insertNode(oFragment);
+            console.log('oFragment', oFragment)
             range.setStartAfter(oLastNode);
             range.setEndAfter(oLastNode);
             userSelection.removeAllRanges();
             userSelection.addRange(range);
+            console.log('userSelection', userSelection)
             this.saveRange();
             return this;
         },

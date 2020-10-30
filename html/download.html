@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>下载</title>
+</head>
+<body>
+<div>
+    <button id="btn">下载图片</button>
+    <a href="https://t8.baidu.com/it/u=1484500186,1503043093&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1604456678&t=c6b87bba289a624d0402f1db125f3bfd" download="1.jpg">图片下载</a>
+</div>
+<!--<script src="https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js"></script>-->
+<script src="./vconsole.js"></script>
+<script>
+    let btn = document.getElementById('btn');
+    btn.onclick = function () {
+        let a = document.createElement('a');
+        let url1 = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQHQ8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyblRVZngzc2tjYTIxVGZxMHh2YzkAAgTPzZhfAwQAjScA';
+        // let url = window.URL.createObjectURL(url1)
+        // console.log('url', url)
+        // let blob = new Blob(url1);
+        // console.log('blob', blob)
+        funDownload(url1)
+    }
+    var funDownload = function (domImg) {
+        // 创建隐藏的可下载链接
+        var eleLink = document.createElement('a');
+        eleLink.download = '';
+        eleLink.style.display = 'none';
+        // 图片转base64地址
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        var width = domImg.naturalWidth;
+        var height = domImg.naturalHeight;
+        context.drawImage(domImg, 0, 0);
+        // 如果是PNG图片，则canvas.toDataURL('image/png')
+        eleLink.href = canvas.toDataURL('image/jpeg');
+        eleLink.click();
+    };
+    console.log('VConsole', VConsole)
+</script>
+</body>
+</html>
