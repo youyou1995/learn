@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js的执行顺序</title>
+    <script>
+        alert('head')
+    </script>
+</head>
+<body>
+<script>
+    alert('dom之前')
+</script>
+<div>1245464</div>
+<script>
+    alert('dom之后')
+</script>
+</body>
+<script>
+    alert('body之后')
+</script>
+</html>
+<script>
+    alert('html之后')
+</script>
