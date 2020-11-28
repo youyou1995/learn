@@ -1,10 +1,90 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style type="text/css">
+      div {
+          margin: 100px auto;
+          width: 2px;
+          height: 2px;
+          border-radius: 1px;
+          box-shadow: 0 -12px 0 3px black, /*上*/
+          0 12px 0 1px #333, /*下*/
+          -12px 0 0 1px #333, /*左*/
+          12px 0 0 1px #333, /*右*/
+          -9px -9px 0 1px #333, /*左上*/
+          9px -9px 0 2px #333, /*右上*/
+          -9px 9px 0 1px #333, /*左下*/
+          9px 9px 0 1px #333/*右下*/
+      ;
+          animation: loading 2s linear 0s infinite;
+          -webkit-animation: loading 2s linear 0s infinite;
+          -o-animation: loading 2s linear 0s infinite;
+          -moz-animation: loading 2s linear 0s infinite;
+      }
+
+      @keyframes loading {
+          from {
+              transform: rotate(0deg);
+          }
+          to {
+              transform: rotate(360deg);
+          }
+      }
+
+      @-webkit-keyframes loading {
+          from {
+              -webkit-transform: rotate(0deg);
+          }
+          to {
+              -webkit-transform: rotate(360deg);
+          }
+      }
+
+      @-o-keyframes loading {
+          from {
+              -o-transform: rotate(0deg);
+          }
+          to {
+              -o-transform: rotate(360deg);
+          }
+      }
+
+      @-moz-keyframes loading {
+          from {
+              -moz-transform: rotate(0deg);
+          }
+          to {
+              -moz-transform: rotate(360deg);
+          }
+      }
+  </style>
 </head>
+
 <body>
-$END$
+<div id="loading"></div>
 </body>
+<script>
+  window.onbeforeunload = (e) => {
+    console.log('e', e)
+    alert('55555555')
+   e.returnValue = '1111111'
+    return true
+    // return "系统可能不会保存您所做的更改55555";
+  }
+  // window.onbeforeunload = function() {
+  //   alert("欢迎下次再来！onbeforeunload");
+  //   return "onbeforeunload is work";
+  // };
+
+  // window.addEventListener("beforeunload", function (event) {
+  //   event.returnValue = "我在这写点东西...";
+  // });
+</script>
 </html>
